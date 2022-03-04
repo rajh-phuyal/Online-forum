@@ -1,13 +1,12 @@
-/* file for the connection for the database */
 <?php
-
-$serverName = 'localhost:3309';
+/* file for the connection for the database */
+$serverName = 'localhost';
 $dbUsername = 'root';
 $dbPassword = '';
 $dbName = 'auth';
 
-$conn = mysqli_connect($serverName, $dbUsername, $dbPassword, $dbName);
+$conn = mysqli_connect($serverName, $dbUsername, $dbPassword);
 
 if (!$conn){
-    die('Database connection Error : ' . mysqli_connect_erro());
+    die('Database connection Error : ' . mysqli_connect_error());
 }
