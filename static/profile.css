@@ -1,0 +1,12 @@
+.profile-box{
+    margin-left: 28%;
+    margin-top: 30px;
+    padding: 42px;
+    width: 40%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #7dec21c4;
+    border: 4px solid rgb(112, 113, 207);
+    border-radius: 7px;
+}

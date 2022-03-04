@@ -6,20 +6,17 @@
     <title>Posts</title>
     <link rel="stylesheet" href="static/main.css">
     <link rel="stylesheet" href="static/forms.css">
+    <link rel="stylesheet" href="static/profile.css">
 </head>
 
 <body>
     <header>
-        <a href="index.php"><img class='header-img' src='images/header_logo.png' width='50%' height='15%' alt='Know by Interaction!'></a>    
+        <centre><a href="index.php"><img class='header-img' src='images/header_logo.png' width='56%' height='17%' alt='Know by Interaction!'></a></centre>
     </header>
     <nav>
         <div>
             <ul>
-                <li><a href="index.php">Talks</a></li>
-                <li><a href="about.php">About<b>?</b></a></li>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
-                <li style="margin-left: 10px;"><a href="profile.php">ME</a></li>
+                <?php include_once 'php_scripts/navbar.inc.php'; ?>
             </ul>
         </div>
     </nav>

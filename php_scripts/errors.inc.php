@@ -37,11 +37,9 @@ function unmatchedMatch($password, $confirmPassword){
 function weakPassword($password){
     $result;
     if(strlen($password) < 8 ){
-        if (preg_match("/^[a-zA-z0-9]*$/", $password)){
-            $result = true;
-        }else{
-            $result = false;
-        }
+        $result = true;
+    }else{
+        $result = false;
     }
     return $result;
 }
@@ -50,6 +48,15 @@ function weakPassword($password){
 function userExists($conn, $username){
     $result;
 
-    $query = 'SELECT * FROM users WHERE username=? OR email=?;';
+    $query = 'SELECT * FROM users WHERE username=?;';
     $data = mysqli_query($conn, $query);
+    $affected_rows = mysqli_num_rows($data);
+    
+    if($affected_rows == 1){
+        $result = true;
+    }
+    else{
+        $result = false;
+    }
+    return $result;
 }
