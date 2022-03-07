@@ -6,20 +6,33 @@
     <title>Posts</title>
     <link rel="stylesheet" href="static/main.css">
     <link rel="stylesheet" href="static/forms.css">
+    <link rel="stylesheet" href="static/profile.css">
 </head>
 
 <body>
     <header>
-        <a href="index.php"><img class='header-img' src='images/header_logo.png' width='50%' height='15%' alt='Know by Interaction!'></a>    
+        <centre><a href="index.php"><img class='header-img' src='images/header_logo.png' width='56%' height='17%' alt='Know by Interaction!'></a></centre>
     </header>
     <nav>
         <div>
             <ul>
-                <li><a href="index.php">Talks</a></li>
-                <li><a href="about.php">About<b>?</b></a></li>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
-                <li style="margin-left: 10px;"><a href="profile.php">ME</a></li>
+                <?php 
+                    /*check if the user is logged in */
+                    if(!isset($_SESSION['username'])){
+                        echo "<li><a href='index.php'>Talks</a></li>";
+                        echo "<li><a href='login.php'>Login</a></li>";
+                        echo "<li><a href='register.php'>Register</a></li>";
+                    }
+                    else{
+                        echo "<li><a href='create.php'>Create</a></li>";
+                        echo "<li><a href='index.php'>Talks</a></li>";
+                        echo "<li><a href='profile.php'>ME</a></li>";
+                        if($_SESSION['status'] == 'admin'){
+                            echo "<li><a href='admin.php'>ADMIN</a></li>";
+                        }
+                        echo "<li><a href='logout.php'>Logout</a></li>";
+                    } 
+                ?>
             </ul>
         </div>
     </nav>
