@@ -22,25 +22,6 @@
 
                 if(!isset($_GET['operation']) || $_GET['operation'] == 'listusers'){
 
-                    /*check for the search option */
-                    if(isset($_GET['submit'])){
-                        $username = $_GET['search-username'];
-                        $data = searchUser($conn, $username);
-                        if($data[0]){
-                            echo "<div class='profile-box'>";
-                            echo "<input class='profile-userId' value='. $data[1] . '>";
-                            echo "<input class='profile-username' value='. $data[2] . '>";
-                            echo "<input class='profile-email' value='. $data[3] . '>";
-                            echo "<input class='profile-status' value='. $data[4] . '>";
-                            echo "</div>";
-                        }
-                        else{
-                            echo "<div class='msg-box-failed'>";
-                            echo "<h2> Couldn't find user with username : ".$username."</h2>";
-                            echo "</div>";
-                        }
-                    }
-
                     /* check for the delete option */
                     if(isset($_GET['delete'])){
                         $userID = $_GET['delete'];
@@ -61,31 +42,67 @@
                     echo "<button type='submit' name='submit'><b>SEARCH</b></button>";
                     echo "</form>";
 
-                    $sql_query = 'SELECT * FROM users';
-                    $result = mysqli_query($conn, $sql_query);
-                    $rowsTouched = mysqli_num_rows($result);
+                    /*check for the search option */
+                    if(isset($_GET['submit'])){
+                        $username = $_GET['search-username'];
+                        $data = searchUser($conn, $username);
+                        if($data[0] !== false){
+                            $userdata = array('userId' => $data[1], 'username' => $data[2], 'email' => $data[3], 'status' => $data[4]);
+                            $rowsTouched = 1;
 
-                    echo "<table class='data-table'>";
-                    echo "<tr>";
-                    echo "<th>UserID</th>";
-                    echo "<th>Username</th>";
-                    echo "<th>Email</th>";
-                    echo "<th>Status</th>";
-                    echo "<th>EDIT</th>";
-                    echo "<th>DELETE</th>";
-                    echo "</tr>";
-                
-                    for ($i=0; $i<$rowsTouched; $i++)
-                    {
-                        $data = mysqli_fetch_array($result);;
-                        echo '<tr>';
-                        echo '<td>'.$data['userId'].'</td>';
-                        echo '<td>'.$data['username'].'</td>';
-                        echo '<td>'.$data['email'].'</td>';
-                        echo '<td>'.$data['status'].'</td>';
-                        echo '<td><a href ="admin-func.inc.php?id='.$data['userId'].'">Edit</a></td>';
-                        echo '<td><a href ="admin.php?delete='.$data['userId'].'" onclick="return confirm(\'Delete registration?\');">Delete</a></td>';
-                        echo '<tr>';
+                            echo "<table class='data-table'>";
+                            echo "<tr>";
+                            echo "<th>UserID</th>";
+                            echo "<th>Username</th>";
+                            echo "<th>Email</th>";
+                            echo "<th>Status</th>";
+                            echo "<th>EDIT</th>";
+                            echo "<th>DELETE</th>";
+                            echo "</tr>";
+
+                            for ($i=0; $i<$rowsTouched; $i++){
+                                echo '<tr>';
+                                echo '<td>'.$userdata['userId'].'</td>';
+                                echo '<td>'.$userdata['username'].'</td>';
+                                echo '<td>'.$userdata['email'].'</td>';
+                                echo '<td>'.$userdata['status'].'</td>';
+                                echo '<td><a href ="admin.php?userID='.$userdata['userId'].'">Edit</a></td>';
+                                echo '<td><a href ="admin.php?delete='.$userdata['userId'].'" onclick="return confirm(\'Delete registration?\');">Delete</a></td>';
+                                echo '<tr>';
+                            }
+                        }
+                        else{
+                            echo "<div class='msg-box-failed'>";
+                            echo "<h2> Couldn't find user with username : ".$username."</h2>";
+                            echo "</div>";
+                        }
+                    }
+                    else{
+                        echo "<table class='data-table'>";
+                        echo "<tr>";
+                        echo "<th>UserID</th>";
+                        echo "<th>Username</th>";
+                        echo "<th>Email</th>";
+                        echo "<th>Status</th>";
+                        echo "<th>EDIT</th>";
+                        echo "<th>DELETE</th>";
+                        echo "</tr>";
+
+                        $sql_query = 'SELECT * FROM users';
+                        $result = mysqli_query($conn, $sql_query);
+                        $rowsTouched = mysqli_num_rows($result);
+
+                        for ($i=0; $i<$rowsTouched; $i++){
+                            $userdata = mysqli_fetch_array($result);
+                            echo '<tr>';
+                            echo '<td>'.$userdata['userId'].'</td>';
+                            echo '<td>'.$userdata['username'].'</td>';
+                            echo '<td>'.$userdata['email'].'</td>';
+                            echo '<td>'.$userdata['status'].'</td>';
+                            echo '<td><a href ="admin.php?userID='.$userdata['userId'].'">Edit</a></td>';
+                            echo '<td><a href ="admin.php?delete='.$userdata['userId'].'" onclick="return confirm(\'Delete registration?\');">Delete</a></td>';
+                            echo '<tr>';
+                        }
                     }
                 }
                 elseif($_GET['operation'] == 'adduser'){
