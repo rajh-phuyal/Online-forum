@@ -1,2 +1,2 @@
 # Online-forum
-This is an online form for python programming language.
+This is an online form for programming language.
